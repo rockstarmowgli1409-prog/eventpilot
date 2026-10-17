@@ -1,0 +1,45 @@
+{
+  "id": "case_023",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Spring Concert",
+    "date": "2027-04-10",
+    "budget_cad": 15000
+  },
+  "email": "Hi Mohan,\n\nTillicum Lighting following up on the lighting quote I sent in September: truss lighting rig for April 10, 2027 at $3,400. As a reminder, that quote expired on October 1, 2026, and prices have gone up 8% since, so a new quote would be $3,672. Please confirm by October 14 if you want the old price.\n\nThanks,\nRosa\nTillicum Lighting",
+  "expected": {
+    "vendor_name": "Tillicum Lighting",
+    "event_date": "2027-04-10",
+    "costs": [
+      {
+        "label": "truss lighting rig (old quote)",
+        "amount_cad": 3400
+      },
+      {
+        "label": "truss lighting rig (new quote)",
+        "amount_cad": 3672
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "old quote expired",
+        "due": "2026-10-01"
+      },
+      {
+        "label": "confirm old price",
+        "due": "2026-10-14"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "confirm whether to accept the old price",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [
+      "deadline_in_past"
+    ]
+  }
+}

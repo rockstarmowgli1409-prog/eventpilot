@@ -1,0 +1,38 @@
+{
+  "id": "case_016",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Winter Gala",
+    "date": "2027-02-13",
+    "budget_cad": 8000
+  },
+  "email": "Hi Mohan! Moss Street Linens. For 20 tables we do white tablecloth + napkin sets at $11 per table, 220 total, and black runners are $4 each (so 80). Pickup is the Thursday before the event, return is the Monday after. Oh and can you tell me how many chairs need covers too? Thanks!! - Beth\nbeth@mossstreetlinens.example",
+  "expected": {
+    "vendor_name": "Moss Street Linens",
+    "event_date": null,
+    "costs": [
+      {
+        "label": "tablecloth and napkin sets for 20 tables",
+        "amount_cad": 220
+      },
+      {
+        "label": "black runners",
+        "amount_cad": 80
+      }
+    ],
+    "deadlines": [],
+    "requirements": [
+      "pickup the Thursday before the event",
+      "return the Monday after"
+    ],
+    "action_items": [
+      {
+        "task": "tell vendor how many chairs need covers",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "beth@mossstreetlinens.example"
+  }
+}

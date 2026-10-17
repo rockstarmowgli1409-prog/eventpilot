@@ -1,0 +1,49 @@
+{
+  "id": "case_030",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Spring Concert",
+    "date": "2027-04-10",
+    "budget_cad": 5000
+  },
+  "email": "Hi Mohan,\n\nMaplewood Audio here. For your concert on April 24, 2027: full PA $3,900 plus stage monitors $1,400. Our hold on the date expires October 9, 2026 unless I hear back. We need a certificate of insurance from you too.\n\nDev\nMaplewood Audio",
+  "expected": {
+    "vendor_name": "Maplewood Audio",
+    "event_date": "2027-04-24",
+    "costs": [
+      {
+        "label": "full PA",
+        "amount_cad": 3900
+      },
+      {
+        "label": "stage monitors",
+        "amount_cad": 1400
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "date hold expires",
+        "due": "2026-10-09"
+      }
+    ],
+    "requirements": [
+      "certificate of insurance"
+    ],
+    "action_items": [
+      {
+        "task": "send certificate of insurance",
+        "owner": "us"
+      },
+      {
+        "task": "reply to extend the hold",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [
+      "deadline_in_past",
+      "over_budget",
+      "date_mismatch"
+    ]
+  }
+}

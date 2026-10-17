@@ -1,0 +1,36 @@
+{
+  "id": "case_008",
+  "difficulty": "easy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Culture Fest",
+    "date": "2027-03-06",
+    "budget_cad": 6000
+  },
+  "email": "Hi,\n\nMount Doug Printing here. 50 posters (18x24) and 500 flyers for $310 total. We need final artwork by February 12, 2027 so we can deliver ahead of the March 6, 2027 festival. Reply with the files and we will start.\n\nGrace Huang\nMount Doug Printing\ngrace@mountdougprinting.example",
+  "expected": {
+    "vendor_name": "Mount Doug Printing",
+    "event_date": "2027-03-06",
+    "costs": [
+      {
+        "label": "50 posters and 500 flyers",
+        "amount_cad": 310
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "final artwork",
+        "due": "2027-02-12"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "send final artwork",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "grace@mountdougprinting.example"
+  }
+}

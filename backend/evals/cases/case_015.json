@@ -1,0 +1,46 @@
+{
+  "id": "case_015",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Culture Fest",
+    "date": "2027-03-06",
+    "budget_cad": 6000
+  },
+  "email": "hi, quick one - marquee 20x40 is $1,950 for the weekend, we can do the 6th of March (sat) as long as we can set up friday the 5th. sidewalls are 15 a metre, you'd probably want about 40m so $600. deposit of half is due when you sign, and sign by nov 15 pls. oh and the ground has to be pegable, no concrete.\n\nogden point marquee",
+  "expected": {
+    "vendor_name": "Ogden Point Marquee",
+    "event_date": "2027-03-06",
+    "costs": [
+      {
+        "label": "20x40 marquee",
+        "amount_cad": 1950
+      },
+      {
+        "label": "sidewalls, 40m",
+        "amount_cad": 600
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "sign contract",
+        "due": "2026-11-15"
+      }
+    ],
+    "requirements": [
+      "pegable ground, no concrete",
+      "setup access on March 5"
+    ],
+    "action_items": [
+      {
+        "task": "sign contract",
+        "owner": "us"
+      },
+      {
+        "task": "pay deposit",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": []
+  }
+}

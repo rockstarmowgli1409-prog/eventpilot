@@ -1,0 +1,38 @@
+{
+  "id": "case_027",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Spring Concert",
+    "date": "2027-04-10",
+    "budget_cad": 15000
+  },
+  "email": "Hi Mohan,\n\nConfirming Ross Bay Bartending for your Spring Concert on April 17, 2027. Two bartenders at $35/hr for 5 hours = $350. Please send the signed agreement by November 30, 2026.\n\nColin\nRoss Bay Bartending\ncolin@rossbaybar.example",
+  "expected": {
+    "vendor_name": "Ross Bay Bartending",
+    "event_date": "2027-04-17",
+    "costs": [
+      {
+        "label": "two bartenders, 5 hours",
+        "amount_cad": 350
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "signed agreement",
+        "due": "2026-11-30"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "send signed agreement",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [
+      "date_mismatch"
+    ],
+    "contact_email": "colin@rossbaybar.example"
+  }
+}

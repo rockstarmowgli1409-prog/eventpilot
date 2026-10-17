@@ -1,0 +1,37 @@
+{
+  "id": "case_026",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Winter Gala",
+    "date": "2027-02-13",
+    "budget_cad": 8000
+  },
+  "email": "Hi Mohan,\n\nValet parking for the Winter Gala on February 13, 2027 is $60 per attendant per night. We would provide 3 attendants, so $180. This rate was only valid through September 30, 2026, so please check with us for current rates.\n\nThanks,\nHillside Valet",
+  "expected": {
+    "vendor_name": "Hillside Valet",
+    "event_date": "2027-02-13",
+    "costs": [
+      {
+        "label": "valet parking, 3 attendants",
+        "amount_cad": 180
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "rate valid until",
+        "due": "2026-09-30"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "check current rates",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [
+      "deadline_in_past"
+    ]
+  }
+}

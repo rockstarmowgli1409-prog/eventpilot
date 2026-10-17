@@ -1,0 +1,36 @@
+{
+  "id": "case_003",
+  "difficulty": "easy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Culture Fest",
+    "date": "2027-03-06",
+    "budget_cad": 6000
+  },
+  "email": "Hi Mohan,\n\nFernwood Photo Booth is available on March 6, 2027. Our package is $640 for four hours with unlimited prints and an attendant. The quote is valid until October 30, 2026. Please let us know if you would like to book.\n\nThanks,\nLeo Tran\nFernwood Photo Booth\nleo@fernwoodphoto.example",
+  "expected": {
+    "vendor_name": "Fernwood Photo Booth",
+    "event_date": "2027-03-06",
+    "costs": [
+      {
+        "label": "photo booth package, four hours",
+        "amount_cad": 640
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "quote expires",
+        "due": "2026-10-30"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "confirm booking",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "leo@fernwoodphoto.example"
+  }
+}

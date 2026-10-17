@@ -1,0 +1,36 @@
+{
+  "id": "case_010",
+  "difficulty": "easy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Night Market",
+    "date": "2027-03-20",
+    "budget_cad": 12000
+  },
+  "email": "Hello Mohan,\n\nEsquimalt Portables can provide 6 standard toilets and 1 accessible unit for March 20, 2027. The all-in price is $710. Units are delivered the day before and picked up the day after. Please confirm by March 1, 2027.\n\nThanks,\nRavi Singh\nEsquimalt Portables\nravi@esquimaltportables.example",
+  "expected": {
+    "vendor_name": "Esquimalt Portables",
+    "event_date": "2027-03-20",
+    "costs": [
+      {
+        "label": "portable toilets, 7 units",
+        "amount_cad": 710
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "confirmation",
+        "due": "2027-03-01"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "confirm booking",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "ravi@esquimaltportables.example"
+  }
+}

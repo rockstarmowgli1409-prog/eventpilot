@@ -1,0 +1,41 @@
+{
+  "id": "case_018",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Spring Concert",
+    "date": "2027-04-10",
+    "budget_cad": 15000
+  },
+  "email": "Hi, it's Aiko from Fisherman's Wharf Foods. We can bring the truck on Apr 10. Pricing: minimum guarantee of $1,500 in sales, if we don't hit it you cover the difference. Also we need a 30amp hookup, water access and a spot 12 ft wide. Can you send the vendor agreement back to me by Nov 20 with the event permit number?\naiko@wharffoods.example",
+  "expected": {
+    "vendor_name": "Fisherman's Wharf Foods",
+    "event_date": "2027-04-10",
+    "costs": [
+      {
+        "label": "minimum sales guarantee",
+        "amount_cad": 1500
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "return vendor agreement with permit number",
+        "due": "2026-11-20"
+      }
+    ],
+    "requirements": [
+      "30 amp hookup",
+      "water access",
+      "12 ft wide spot",
+      "event permit number"
+    ],
+    "action_items": [
+      {
+        "task": "return vendor agreement with permit number",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "aiko@wharffoods.example"
+  }
+}

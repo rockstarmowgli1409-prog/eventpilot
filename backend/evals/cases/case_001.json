@@ -1,0 +1,40 @@
+{
+  "id": "case_001",
+  "difficulty": "easy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Winter Gala",
+    "date": "2027-02-13",
+    "budget_cad": 8000
+  },
+  "email": "Hi Mohan,\n\nThank you for your enquiry about the Winter Gala on February 13, 2027. Garry Oak Sound can provide a full PA system and one technician for $1,200. To hold the date we need a 25% deposit by November 6, 2026. Please reply to confirm.\n\nRegards,\nPriya Nair\nGarry Oak Sound\npriya@garryoaksound.example",
+  "expected": {
+    "vendor_name": "Garry Oak Sound",
+    "event_date": "2027-02-13",
+    "costs": [
+      {
+        "label": "PA system and technician",
+        "amount_cad": 1200
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "deposit",
+        "due": "2026-11-06"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "confirm booking",
+        "owner": "us"
+      },
+      {
+        "task": "pay deposit",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "priya@garryoaksound.example"
+  }
+}

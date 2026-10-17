@@ -1,0 +1,52 @@
+{
+  "id": "case_012",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Night Market",
+    "date": "2027-03-20",
+    "budget_cad": 12000
+  },
+  "email": "Hi there Mohan, Dev from Beacon Hill Bouncy Castles. yep we do events! castle is 350 for the day, the obstacle course is 425, you could do both for 700 if u book before the end of the month. we'd need a flat grassy area and an outlet, and we need a certificate of insurance from you before we show up. not sure what date you're looking at tho, let me know. cheers, Dev\ndev@beaconhillbouncy.example",
+  "expected": {
+    "vendor_name": "Beacon Hill Bouncy Castles",
+    "event_date": null,
+    "costs": [
+      {
+        "label": "bouncy castle",
+        "amount_cad": 350
+      },
+      {
+        "label": "obstacle course",
+        "amount_cad": 425
+      },
+      {
+        "label": "castle and obstacle course bundle",
+        "amount_cad": 700
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "bundle offer ends",
+        "due": "2026-10-31"
+      }
+    ],
+    "requirements": [
+      "flat grassy area",
+      "power outlet",
+      "certificate of insurance"
+    ],
+    "action_items": [
+      {
+        "task": "send certificate of insurance",
+        "owner": "us"
+      },
+      {
+        "task": "tell vendor the event date",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "dev@beaconhillbouncy.example"
+  }
+}

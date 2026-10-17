@@ -1,0 +1,38 @@
+{
+  "id": "case_006",
+  "difficulty": "easy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Winter Gala",
+    "date": "2027-02-13",
+    "budget_cad": 8000
+  },
+  "email": "Hello,\n\nSalish Sea Lighting quote for the Winter Gala (February 13, 2027): uplighting package with 12 fixtures, $780 including setup and teardown. We need access to the ballroom from 2pm on the day of the event. A deposit of $200 is due by January 15, 2027.\n\nThanks,\nInes Moreau\nSalish Sea Lighting\nines@salishsealighting.example",
+  "expected": {
+    "vendor_name": "Salish Sea Lighting",
+    "event_date": "2027-02-13",
+    "costs": [
+      {
+        "label": "uplighting package, 12 fixtures",
+        "amount_cad": 780
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "deposit",
+        "due": "2027-01-15"
+      }
+    ],
+    "requirements": [
+      "ballroom access from 2pm"
+    ],
+    "action_items": [
+      {
+        "task": "pay deposit",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "ines@salishsealighting.example"
+  }
+}

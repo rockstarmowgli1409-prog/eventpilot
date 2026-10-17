@@ -1,0 +1,36 @@
+{
+  "id": "case_024",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Culture Fest",
+    "date": "2027-03-06",
+    "budget_cad": 6000
+  },
+  "email": "Hi Mohan,\n\nHaultain Audio Visual here. For March 6, 2027 the LED wall rental is $4,200, the sound package is $2,300, and delivery is $350. Let me know.\n\nQuinn\nHaultain Audio Visual\nquinn@haultainav.example",
+  "expected": {
+    "vendor_name": "Haultain Audio Visual",
+    "event_date": "2027-03-06",
+    "costs": [
+      {
+        "label": "LED wall rental",
+        "amount_cad": 4200
+      },
+      {
+        "label": "sound package",
+        "amount_cad": 2300
+      },
+      {
+        "label": "delivery",
+        "amount_cad": 350
+      }
+    ],
+    "deadlines": [],
+    "requirements": [],
+    "action_items": [],
+    "expected_risks": [
+      "over_budget"
+    ],
+    "contact_email": "quinn@haultainav.example"
+  }
+}

@@ -63,6 +63,19 @@ def grounded(evidence: str | None, email_text: str) -> bool:
     return evidence is None or evidence in email_text
 
 
+def count_evidence(extraction: Extraction, email_text: str) -> tuple[int, int]:
+    """Return (quotes returned, quotes not found verbatim in the email)."""
+    quotes = [
+        getattr(extraction, n).evidence
+        for n in ("vendor_name", "contact_email", "event_name", "event_date")
+    ]
+    quotes += [
+        i.evidence for i in (*extraction.costs, *extraction.deadlines, *extraction.action_items)
+    ]
+    present = [q for q in quotes if q]
+    return len(present), sum(1 for q in present if q not in email_text)
+
+
 def enforce_grounding(extraction: Extraction, email_text: str) -> Extraction:
     """Drop any value whose evidence quote is not literally in the email."""
     for name in ("vendor_name", "contact_email", "event_name", "event_date"):
@@ -109,13 +122,18 @@ def extract_with_anthropic(
     block = next((b for b in response.content if b.type == "tool_use"), None)
     if block is None:
         raise ExtractionError("Model did not return a tool call")
-    extraction = enforce_grounding(Extraction.model_validate(block.input), email_text)
+    extraction = Extraction.model_validate(block.input)
+    # Measured before enforcement so evals report how often the model fabricates quotes.
+    evidence_total, evidence_ungrounded = count_evidence(extraction, email_text)
+    extraction = enforce_grounding(extraction, email_text)
 
     usage = response.usage
     meta = {
         "model": settings.anthropic_model,
         "prompt_version": prompt_version,
         "latency_ms": latency_ms,
+        "evidence_total": evidence_total,
+        "evidence_ungrounded": evidence_ungrounded,
         "input_tokens": usage.input_tokens,
         "output_tokens": usage.output_tokens,
         "cost_usd": estimate_cost_usd(usage.input_tokens, usage.output_tokens, settings),

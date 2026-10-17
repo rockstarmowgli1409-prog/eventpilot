@@ -1,0 +1,36 @@
+{
+  "id": "case_005",
+  "difficulty": "easy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Night Market",
+    "date": "2027-03-20",
+    "budget_cad": 12000
+  },
+  "email": "Hi Mohan,\n\nWe have two licensed guards available for the Night Market on March 20, 2027, from 6pm to midnight, at $45 per guard per hour. That is 6 hours x 2 guards x $45 = $540. Please send the signed contract by February 20, 2027.\n\nMarcus Lee\nCadboro Bay Security\nmarcus@cadborobaysecurity.example",
+  "expected": {
+    "vendor_name": "Cadboro Bay Security",
+    "event_date": "2027-03-20",
+    "costs": [
+      {
+        "label": "two security guards, 6 hours",
+        "amount_cad": 540
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "signed contract",
+        "due": "2027-02-20"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "send signed contract",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "marcus@cadborobaysecurity.example"
+  }
+}

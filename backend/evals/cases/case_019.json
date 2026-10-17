@@ -1,0 +1,54 @@
+{
+  "id": "case_019",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Welcome Back BBQ",
+    "date": "2027-01-14",
+    "budget_cad": 3000
+  },
+  "email": "Hey!! Gorge Waterway Games here. Giant jenga, cornhole x4, ping pong table: $60, $80, $120 each, or all three for $230 (saves you 30!). Available Jan 14. We'd drop off at 11 and grab at 6. Can't do any later pick up, sorry. Deposit due Fri Nov 6 and we'd love a quick reply on which ones you want.",
+  "expected": {
+    "vendor_name": "Gorge Waterway Games",
+    "event_date": "2027-01-14",
+    "costs": [
+      {
+        "label": "giant jenga",
+        "amount_cad": 60
+      },
+      {
+        "label": "cornhole x4",
+        "amount_cad": 80
+      },
+      {
+        "label": "ping pong table",
+        "amount_cad": 120
+      },
+      {
+        "label": "all three bundle",
+        "amount_cad": 230
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "deposit",
+        "due": "2026-11-06"
+      }
+    ],
+    "requirements": [
+      "drop-off at 11",
+      "pick-up at 6"
+    ],
+    "action_items": [
+      {
+        "task": "tell vendor which games we want",
+        "owner": "us"
+      },
+      {
+        "task": "pay deposit",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": []
+  }
+}

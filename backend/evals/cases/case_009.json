@@ -1,0 +1,36 @@
+{
+  "id": "case_009",
+  "difficulty": "easy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Spring Concert",
+    "date": "2027-04-10",
+    "budget_cad": 15000
+  },
+  "email": "Hi Mohan,\n\nCraigflower Staging can build a 24x16 ft stage with a roof for the April 10, 2027 concert. Price: $4,800 including delivery and crew. Because we are booked solid in spring, we need a 50% deposit ($2,400) by December 1, 2026.\n\nRegards,\nOwen Pell\nCraigflower Staging\nowen@craigflowerstaging.example",
+  "expected": {
+    "vendor_name": "Craigflower Staging",
+    "event_date": "2027-04-10",
+    "costs": [
+      {
+        "label": "24x16 ft stage with roof",
+        "amount_cad": 4800
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "deposit",
+        "due": "2026-12-01"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "pay deposit",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "owen@craigflowerstaging.example"
+  }
+}

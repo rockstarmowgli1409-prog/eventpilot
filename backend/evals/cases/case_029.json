@@ -1,0 +1,25 @@
+{
+  "id": "case_029",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Welcome Back BBQ",
+    "date": "2027-01-14",
+    "budget_cad": 3000
+  },
+  "email": "hey, saw your post. we might be able to do something in january?? price depends on what you need. give me a call sometime. 250-555-0142",
+  "expected": {
+    "vendor_name": null,
+    "event_date": null,
+    "costs": [],
+    "deadlines": [],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "call the vendor",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": []
+  }
+}

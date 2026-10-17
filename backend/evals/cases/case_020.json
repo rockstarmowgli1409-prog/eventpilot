@@ -1,0 +1,44 @@
+{
+  "id": "case_020",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Culture Fest",
+    "date": "2027-03-06",
+    "budget_cad": 6000
+  },
+  "email": "Hi Mohan, thanks for reaching out about Culture Fest! We're a 9 person troupe. Our fee is $1,100 for a 30 min set, or $1,800 for two sets. We'd need a 20x20 stage, a green room, and 9 bottles of water. March 6 works. If you could get back to me by the 30th of October I can hold it.\n\nAnika, Cascadia Dance Troupe\nanika@cascadiadance.example",
+  "expected": {
+    "vendor_name": "Cascadia Dance Troupe",
+    "event_date": "2027-03-06",
+    "costs": [
+      {
+        "label": "30 minute set",
+        "amount_cad": 1100
+      },
+      {
+        "label": "two sets",
+        "amount_cad": 1800
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "hold the date",
+        "due": "2026-10-30"
+      }
+    ],
+    "requirements": [
+      "20x20 stage",
+      "green room",
+      "9 bottles of water"
+    ],
+    "action_items": [
+      {
+        "task": "reply to hold the date",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "anika@cascadiadance.example"
+  }
+}

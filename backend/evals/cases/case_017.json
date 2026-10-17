@@ -1,0 +1,37 @@
+{
+  "id": "case_017",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Night Market",
+    "date": "2027-03-20",
+    "budget_cad": 12000
+  },
+  "email": "Hey Mohan, Harbour Tents here. For the Night Market on March 20 we can bring the 10x10 tent and two staff for $850, deposit by next Fri to lock it in. Need power access near the tent.",
+  "expected": {
+    "vendor_name": "Harbour Tents",
+    "event_date": "2027-03-20",
+    "costs": [
+      {
+        "label": "tent and staff",
+        "amount_cad": 850
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "deposit",
+        "due": "2026-10-23"
+      }
+    ],
+    "requirements": [
+      "power access"
+    ],
+    "action_items": [
+      {
+        "task": "send deposit",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": []
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "case_021",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Night Market",
+    "date": "2027-03-20",
+    "budget_cad": 12000
+  },
+  "email": "Hi Mohan,\n\nCraigflower Sound can supply a PA and mics for $900. Let me know if you want to go ahead.\n\nPat\nCraigflower Sound\npat@craigflowersound.example",
+  "expected": {
+    "vendor_name": "Craigflower Sound",
+    "event_date": null,
+    "costs": [
+      {
+        "label": "PA and mics",
+        "amount_cad": 900
+      }
+    ],
+    "deadlines": [],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "confirm whether to go ahead",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "pat@craigflowersound.example"
+  }
+}

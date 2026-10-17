@@ -1,0 +1,36 @@
+{
+  "id": "case_002",
+  "difficulty": "easy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Welcome Back BBQ",
+    "date": "2027-01-14",
+    "budget_cad": 3000
+  },
+  "email": "Hello,\n\nInner Harbour Catering would be glad to cater the Welcome Back BBQ on January 14, 2027 for 150 guests at $14.50 per person, for a total of $2,175. The final headcount is due by January 7, 2027. We bring our own grills and propane.\n\nKind regards,\nDana Whitfield\nInner Harbour Catering\ndana@innerharbourcatering.example",
+  "expected": {
+    "vendor_name": "Inner Harbour Catering",
+    "event_date": "2027-01-14",
+    "costs": [
+      {
+        "label": "catering for 150 guests",
+        "amount_cad": 2175
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "final headcount",
+        "due": "2027-01-07"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "confirm final headcount",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "dana@innerharbourcatering.example"
+  }
+}

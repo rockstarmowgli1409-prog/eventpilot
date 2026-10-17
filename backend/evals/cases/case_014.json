@@ -1,0 +1,41 @@
+{
+  "id": "case_014",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Spring Concert",
+    "date": "2027-04-10",
+    "budget_cad": 15000
+  },
+  "email": "Mohan - following up from the phone call. Truss and two line arrays is 2,900 plus 12% for tax and fees, so 3,248 all in. Crew of 3 at 60/hr for 8 hours = 1,440. I'll hold April 10 for you till Friday Oct 30, then it goes back on the market. Also the city noise permit is on you btw.\n\n- Cal, Sooke Stage & Truss",
+  "expected": {
+    "vendor_name": "Sooke Stage & Truss",
+    "event_date": "2027-04-10",
+    "costs": [
+      {
+        "label": "truss and two line arrays",
+        "amount_cad": 3248
+      },
+      {
+        "label": "crew of 3, 8 hours",
+        "amount_cad": 1440
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "date hold expires",
+        "due": "2026-10-30"
+      }
+    ],
+    "requirements": [
+      "city noise permit"
+    ],
+    "action_items": [
+      {
+        "task": "get the city noise permit",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": []
+  }
+}

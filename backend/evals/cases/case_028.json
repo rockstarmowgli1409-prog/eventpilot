@@ -1,0 +1,39 @@
+{
+  "id": "case_028",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Night Market",
+    "date": "2027-03-20",
+    "budget_cad": 12000
+  },
+  "email": "Hi Mohan,\n\nGonzales Bounce & Play would love to bring our inflatable slide on March 20, 2027, for $520. One thing: our policy requires event insurance to be in place for inflatables, and the venue will want to see proof. Otherwise we are all set! A deposit of $100 is due by January 8, 2027.\n\nAna\nGonzales Bounce & Play",
+  "expected": {
+    "vendor_name": "Gonzales Bounce & Play",
+    "event_date": "2027-03-20",
+    "costs": [
+      {
+        "label": "inflatable slide",
+        "amount_cad": 520
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "deposit",
+        "due": "2027-01-08"
+      }
+    ],
+    "requirements": [
+      "event insurance for inflatables"
+    ],
+    "action_items": [
+      {
+        "task": "pay deposit",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [
+      "missing_insurance"
+    ]
+  }
+}

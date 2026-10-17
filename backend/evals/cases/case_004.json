@@ -1,0 +1,30 @@
+{
+  "id": "case_004",
+  "difficulty": "easy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Spring Concert",
+    "date": "2027-04-10",
+    "budget_cad": 15000
+  },
+  "email": "Hello Mohan,\n\nOak Bay Rentals can supply 200 stackable chairs and 25 round tables for April 10, 2027. Chairs are $2.50 each, which comes to $500, and tables are $12 each, which comes to $300. Delivery is free within Victoria and the balance is payable on delivery.\n\nSam Okafor\nOak Bay Rentals\nsam@oakbayrentals.example",
+  "expected": {
+    "vendor_name": "Oak Bay Rentals",
+    "event_date": "2027-04-10",
+    "costs": [
+      {
+        "label": "200 chairs",
+        "amount_cad": 500
+      },
+      {
+        "label": "25 round tables",
+        "amount_cad": 300
+      }
+    ],
+    "deadlines": [],
+    "requirements": [],
+    "action_items": [],
+    "expected_risks": [],
+    "contact_email": "sam@oakbayrentals.example"
+  }
+}

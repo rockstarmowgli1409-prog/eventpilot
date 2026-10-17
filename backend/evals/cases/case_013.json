@@ -1,0 +1,46 @@
+{
+  "id": "case_013",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Welcome Back BBQ",
+    "date": "2027-01-14",
+    "budget_cad": 3000
+  },
+  "email": "Hi! Cook Street Cupcakes (Marnie). We could do 8 dozen cupcakes for the BBQ on January 14th - $48 a dozen so $384, gluten free is +$12 a dozen if you want some. Could you tell me the final flavours by Dec 10th? And can I drop off at noon? Thx!!\nmarnie@cookstcupcakes.example",
+  "expected": {
+    "vendor_name": "Cook Street Cupcakes",
+    "event_date": "2027-01-14",
+    "costs": [
+      {
+        "label": "8 dozen cupcakes",
+        "amount_cad": 384
+      },
+      {
+        "label": "gluten free upgrade per dozen",
+        "amount_cad": 12
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "final flavours",
+        "due": "2026-12-10"
+      }
+    ],
+    "requirements": [
+      "drop-off at noon"
+    ],
+    "action_items": [
+      {
+        "task": "send final flavours",
+        "owner": "us"
+      },
+      {
+        "task": "confirm drop-off at noon",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [],
+    "contact_email": "marnie@cookstcupcakes.example"
+  }
+}

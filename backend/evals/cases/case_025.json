@@ -1,0 +1,41 @@
+{
+  "id": "case_025",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Night Market",
+    "date": "2027-03-20",
+    "budget_cad": 12000
+  },
+  "email": "Hi Mohan,\n\nFisgard Food Co-op here. We can sell at the Night Market on March 20, 2027. The table fee is $120 and the final payment is due by April 3, 2027. We will also need your insurance details.\n\nNina\nFisgard Food Co-op",
+  "expected": {
+    "vendor_name": "Fisgard Food Co-op",
+    "event_date": "2027-03-20",
+    "costs": [
+      {
+        "label": "table fee",
+        "amount_cad": 120
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "final payment",
+        "due": "2027-04-03"
+      }
+    ],
+    "requirements": [],
+    "action_items": [
+      {
+        "task": "send insurance details",
+        "owner": "us"
+      },
+      {
+        "task": "make final payment",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": [
+      "deadline_after_event"
+    ]
+  }
+}

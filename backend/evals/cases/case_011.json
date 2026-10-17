@@ -1,0 +1,45 @@
+{
+  "id": "case_011",
+  "difficulty": "messy",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Winter Gala",
+    "date": "2027-02-13",
+    "budget_cad": 8000
+  },
+  "email": "hey mohan!! so for the gala we can do centrepieces for 12 tables, thinking $38 each?? so like 456 give or take. also if u want an arch thats another 220. need to know by wednesday the 21st if the arch is a yes bc i have to order. oh and ill need someone to unlock the venue at 10am\n\n- Jo, Fernwood Flowers",
+  "expected": {
+    "vendor_name": "Fernwood Flowers",
+    "event_date": null,
+    "costs": [
+      {
+        "label": "centrepieces for 12 tables",
+        "amount_cad": 456
+      },
+      {
+        "label": "arch",
+        "amount_cad": 220
+      }
+    ],
+    "deadlines": [
+      {
+        "label": "decide on arch",
+        "due": "2026-10-21"
+      }
+    ],
+    "requirements": [
+      "venue unlocked at 10am"
+    ],
+    "action_items": [
+      {
+        "task": "confirm whether we want the arch",
+        "owner": "us"
+      },
+      {
+        "task": "unlock the venue at 10am",
+        "owner": "us"
+      }
+    ],
+    "expected_risks": []
+  }
+}

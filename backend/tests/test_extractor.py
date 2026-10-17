@@ -86,3 +86,10 @@ def test_missing_tool_call_raises():
 def test_unknown_prompt_version_raises():
     with pytest.raises(ExtractionError):
         run(fake_client(payload()), version="v9")
+
+
+def test_meta_counts_ungrounded_quotes_before_they_are_dropped():
+    bad = payload(costs=[{"label": "tent", "amount_cad": 850, "evidence": "made up quote"}])
+    meta = run(fake_client(bad)).meta
+    assert meta["evidence_ungrounded"] == 1
+    assert meta["evidence_total"] == 3  # vendor, made-up cost quote, deadline

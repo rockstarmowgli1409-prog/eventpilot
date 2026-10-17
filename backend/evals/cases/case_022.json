@@ -1,0 +1,30 @@
+{
+  "id": "case_022",
+  "difficulty": "traps",
+  "reference_date": "2026-10-17",
+  "event": {
+    "name": "Winter Gala",
+    "date": "2027-02-13",
+    "budget_cad": 8000
+  },
+  "email": "Hi Mohan,\n\nDallas Road Photography here. For the Winter Gala on February 13, 2027 the price is $700 for four hours. In my last email I said $620 for four hours, but honestly I can't remember which was right, so please use whichever one you prefer and I'll sort it out.\n\nAlex\nalex@dallasroadphoto.example",
+  "expected": {
+    "vendor_name": "Dallas Road Photography",
+    "event_date": "2027-02-13",
+    "costs": [
+      {
+        "label": "photography, four hours",
+        "amount_cad": 700
+      },
+      {
+        "label": "photography, four hours (earlier quote)",
+        "amount_cad": 620
+      }
+    ],
+    "deadlines": [],
+    "requirements": [],
+    "action_items": [],
+    "expected_risks": [],
+    "contact_email": "alex@dallasroadphoto.example"
+  }
+}
