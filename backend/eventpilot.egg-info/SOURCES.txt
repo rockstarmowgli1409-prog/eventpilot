@@ -1,0 +1,6 @@
+pyproject.toml
+eventpilot.egg-info/PKG-INFO
+eventpilot.egg-info/SOURCES.txt
+eventpilot.egg-info/dependency_links.txt
+eventpilot.egg-info/requires.txt
+eventpilot.egg-info/top_level.txt
