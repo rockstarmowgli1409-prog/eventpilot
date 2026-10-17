@@ -1,0 +1,27 @@
+databases:
+  - name: eventpilot-db
+    plan: free
+
+services:
+  - type: web
+    name: eventpilot-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -e .
+    startCommand: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DATABASE_URL
+        fromDatabase:
+          name: eventpilot-db
+          property: connectionString
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ANTHROPIC_MODEL
+        value: claude-sonnet-5-5
+      - key: DAILY_COST_CAP_USD
+        value: "3"
+      - key: ALLOWED_ORIGINS
+        sync: false # set to your Vercel URL, e.g. https://eventpilot.vercel.app

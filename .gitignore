@@ -8,5 +8,3 @@ node_modules/
 dist/
 *.db
 .DS_Store
-backend/evals/results/*.json
-!backend/evals/results/.gitkeep
