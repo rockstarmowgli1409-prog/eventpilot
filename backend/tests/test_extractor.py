@@ -107,3 +107,11 @@ def test_truncated_or_invalid_json_raises():
         run(fake_client(json.dumps(payload())[:40], stop_reason="max_tokens"))
     with pytest.raises(ExtractionError):
         run(fake_client("not json"))
+
+
+def test_v3_extends_v2_with_the_deposit_rule():
+    from app.prompts import PROMPT_V2, PROMPT_V3, PROMPTS
+
+    assert PROMPT_V3.startswith(PROMPT_V2)
+    assert "Deposits are part of the price" in PROMPT_V3
+    assert set(PROMPTS) == {"v1", "v2", "v3"}

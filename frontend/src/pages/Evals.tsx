@@ -29,7 +29,11 @@ const BARS: { label: string; get: Getter }[] = [
   { label: "Grounding", get: (r) => r.grounding_rate },
 ];
 
-const BAR_COLOR: Record<string, string> = { v1: "bg-slate-400 dark:bg-slate-500", v2: "bg-indigo-600" };
+const BAR_COLOR: Record<string, string> = {
+  v1: "bg-slate-400 dark:bg-slate-500",
+  v2: "bg-indigo-400",
+  v3: "bg-indigo-600",
+};
 
 function Delta({ a, b, lowerIsBetter }: { a: number | null | undefined; b: number | null | undefined; lowerIsBetter?: boolean }) {
   if (a == null || b == null || a === b) return null;

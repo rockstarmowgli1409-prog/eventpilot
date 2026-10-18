@@ -36,9 +36,12 @@ function Measured() {
   useEffect(() => {
     api.latestEvals().then((r) => setRuns(r.runs), () => setRuns(null));
   }, []);
-  const v1 = runs?.v1;
-  const v2 = runs?.v2;
-  if (!v2) return null;
+  const versions = Object.keys(runs ?? {}).sort();
+  const first = runs?.[versions[0]];
+  const latest = runs?.[versions[versions.length - 1]];
+  if (!runs || !latest) return null;
+  const baseline = versions.length > 1 ? first : undefined;
+  const v2 = latest;
   return (
     <section className="mx-auto max-w-6xl px-4 py-16 sm:px-8">
       <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Measured, not claimed</h2>
@@ -50,12 +53,12 @@ function Measured() {
         <Tile
           label="Overall score"
           value={pct(v2.overall_score)}
-          sub={v1 ? `Prompt v2, up from ${pct(v1.overall_score)} with v1` : "Prompt v2"}
+          sub={baseline ? `Prompt ${latest.prompt_version}, vs ${pct(baseline.overall_score)} with ${baseline.prompt_version}` : `Prompt ${latest.prompt_version}`}
         />
         <Tile
           label="Evidence grounding"
           value={pct(v2.grounding_rate)}
-          sub={v1 ? `Quotes found verbatim, v1 was ${pct(v1.grounding_rate)}` : "Quotes found verbatim"}
+          sub={baseline ? `Quotes found verbatim, ${baseline.prompt_version} was ${pct(baseline.grounding_rate)}` : "Quotes found verbatim"}
         />
         <Tile label="Mean latency" value={seconds(v2.latency_mean_ms)} sub={`p95 ${seconds(v2.latency_p95_ms)}`} />
         <Tile label="Cost per 100 emails" value={usd(v2.cost_per_100_usd)} sub="Estimated from token prices" />

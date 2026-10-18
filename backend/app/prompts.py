@@ -23,4 +23,16 @@ Rules:
 8. open_questions: anything unclear, missing or contradictory that the team should ask.
 9. confidence: 0-1, how sure you are the value is correct and supported by the evidence."""
 
-PROMPTS = {"v1": PROMPT_V1, "v2": PROMPT_V2}
+PROMPT_V3 = (
+    PROMPT_V2
+    + """
+10. Deposits are part of the price. A deposit, balance or instalment is a share of a quoted
+    price, not an extra cost. Do not add a separate cost entry for it (that double-counts
+    the total). Only list an extra charge, such as an optional upgrade, as its own cost.
+    Record the deposit as a deadline or action item instead.
+11. A deadline needs a calendar date that is stated or can be resolved from the email.
+    Payment terms with no date ("balance due on delivery") are not deadlines: put them in
+    requirements or open_questions."""
+)
+
+PROMPTS = {"v1": PROMPT_V1, "v2": PROMPT_V2, "v3": PROMPT_V3}

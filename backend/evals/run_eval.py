@@ -213,7 +213,7 @@ def write_report(report: dict, results_dir: Path = RESULTS_DIR) -> Path:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--prompt", default="v1", choices=["v1", "v2"])
+    parser.add_argument("--prompt", default="v1", choices=["v1", "v2", "v3"])
     parser.add_argument("--limit", type=int, default=None, help="only run the first N cases")
     args = parser.parse_args(argv)
 

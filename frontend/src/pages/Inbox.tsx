@@ -23,7 +23,7 @@ export default function Inbox() {
   const { events, selectedId, setSelectedId, refresh, loading, error: eventsError } = useEvents();
   const location = useLocation();
   const [email, setEmail] = useState("");
-  const [promptVersion, setPromptVersion] = useState("v2");
+  const [promptVersion, setPromptVersion] = useState("v3");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ExtractResponse | null>(null);
@@ -108,7 +108,7 @@ export default function Inbox() {
             {busy ? "Extracting…" : "Extract"}
           </button>
           <div role="group" aria-label="Prompt version" className="inline-flex overflow-hidden rounded-lg border border-slate-300 text-xs dark:border-slate-700">
-            {["v1", "v2"].map((v) => (
+            {["v1", "v2", "v3"].map((v) => (
               <button
                 key={v}
                 onClick={() => setPromptVersion(v)}

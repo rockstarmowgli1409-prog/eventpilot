@@ -27,34 +27,38 @@ The eval harness lives in `backend/evals/`. It runs the extractor over 30 labell
 - risk flags are scored by running the real risk engine on the model's output and comparing to the labelled expected risks
 - evidence grounding rate is measured on the model's raw output, **before** the pipeline drops any quote that is not literally in the email
 
-**Results** (2026-10-18, 30 synthetic cases, `claude-sonnet-5-5`, one run per prompt; two earlier full runs landed within about 1.5 points on overall score, so run-to-run noise is small but real because this model does not accept a temperature setting):
+**Results** (2026-10-18, 30 synthetic cases, `claude-sonnet-5-5`, one run per prompt; two earlier full runs of v1 and v2 landed within about 1.5 points of these on overall score. Run-to-run noise is small but real, because this model does not accept a temperature setting):
 
-| Metric | Prompt v1 | Prompt v2 |
-|---|---|---|
-| Overall score (mean per-case field score) | 75.8% | 92.5% |
-| Vendor name accuracy | 100% | 100% |
-| Event date accuracy | 96.7% | 96.7% |
-| Cost F1 | 91.1% | 95.8% |
-| Deadline F1 | 88.9% | 90.6% |
-| Action item F1 | 0.0% | 82.1% |
-| Requirements F1 | 66.7% | 85.7% |
-| Risk flag accuracy | 90.0% | 90.0% |
-| Evidence grounding rate (raw model output) | 93.2% | 100% |
-| Mean / p95 latency | 4.0 s / 5.5 s | 5.0 s / 12.8 s |
-| Cost per 100 emails (estimated USD) | $1.53 | $1.82 |
+| Metric | Prompt v1 | Prompt v2 | Prompt v3 |
+|---|---|---|---|
+| Overall score (mean per-case field score) | 75.8% | 92.5% | 95.1% |
+| Vendor name accuracy | 100% | 100% | 100% |
+| Event date accuracy | 96.7% | 96.7% | 100% |
+| Cost F1 | 91.1% | 95.8% | 100% |
+| Deadline F1 | 88.9% | 90.6% | 96.0% |
+| Action item F1 | 0.0% | 82.1% | 88.0% |
+| Requirements F1 | 66.7% | 85.7% | 83.3% |
+| Risk flag accuracy | 90.0% | 90.0% | 93.3% |
+| Evidence grounding rate (raw model output) | 93.2% | 100% | 100% |
+| Mean / p95 latency | 4.0 s / 5.5 s | 5.0 s / 12.8 s | 5.2 s / 11.8 s |
+| Cost per 100 emails (estimated USD) | $1.53 | $1.82 | $1.93 |
 
 Raw results are in `backend/evals/results/`. Cost is estimated from the per-token prices in `config.py`, not read from a bill.
 
-**Known failure modes (from reading the failures):**
+**How the prompts differ.** v1 is a one-line instruction. v2 adds rules: quote evidence verbatim, never guess, normalise dates, define who owns an action item. v3 is v2 plus two rules added **after reading v2's failures on this same 30-case set**: a deposit is part of the quoted price (not a separate cost), and a deadline needs a calendar date. Because v3 was tuned on the cases it is scored on, its numbers are optimistic. A fresh, unseen set would be the honest test.
 
-- **v1 action items score 0.0** because v1 has no owner convention and writes the owner as a person's name ("Mohan") instead of "us". v2's prompt defines the owners, which is most of the gap. That is a real prompt weakness, though it is also partly a consequence of how I labelled owners.
-- **v1 fabricates quotes**: 6.8% of its evidence strings were not verbatim in the email. The pipeline nulls those, but the raw rate is what is reported. v2 had none in this run.
-- **v2 double-counts deposits as separate costs** (cases 6, 9, 28). A deposit is usually part of the quoted price, so this inflates totals and could trigger a false `over_budget`. Not fixed yet.
-- **v2 turns payment terms with no date into deadlines or requirements** and adds extra, often reasonable, action items that the answer key does not list. Part of the remaining gap is incomplete labels, not model error.
-- **One flaky date**: in one run the model returned a null event date for case 30 (April 24 vs the event record's April 10), which hid a `date_mismatch`; a re-run returned it correctly.
-- **p95 latency for v2 (12.8 s)** is driven by a few slow calls.
+**What reading the failures showed:**
 
-**About the test set.** The 30 emails are synthetic, and so are the labels. Claude Code drafted both the emails and the answer key, and no human has independently reviewed the answer key. I did not edit the cases after seeing results, and I did not tune v2 against them, so v2 is the first draft of that prompt. Still, read the cases in `backend/evals/cases/` and correct any label you disagree with before quoting these numbers. Other label ambiguities: relative dates like "next Fri" (resolved against a fixed reference date of 2026-10-17), and whether an insurance mention counts as an action item for the `missing_insurance` rule (case 28 labels it as not, and the model disagreed).
+- **v1 action items score 0.0** because v1 has no owner convention and writes the owner as a person's name ("Mohan") instead of "us". v2 defines the owners, which is most of the gap. That is a real prompt weakness, though it is also partly a consequence of how I labelled owners.
+- **v1 fabricates quotes**: 6.8% of its evidence strings were not verbatim in the email. The pipeline nulls those, but the raw rate is what is reported. v2 and v3 had none in this run.
+- **v2 double-counted deposits as separate costs** (cases 6, 9, 28), which inflates the total and could trigger a false `over_budget`. v3's deposit rule fixed this: cost F1 went to 100%.
+- **v3 introduced a new false alarm (case 16):** told to turn dated terms into deadlines, it resolved "return is the Monday after" to 2027-02-15, which is after the event, so the `deadline_after_event` rule fired. Arguably the model is right that the return falls after the event, but the email is not a problem, so this counts as a false positive.
+- **v3 requirements slipped slightly (85.7% to 83.3%)** because undated payment terms and logistics now land there, and the answer key lists few of them.
+- **Remaining misses are mostly label ambiguity**, not model error: the model adds reasonable action items the key does not list (for example "arrange event insurance" in case 28, which is why `missing_insurance` was not flagged there).
+- **One flaky date in v2:** in one run the model returned a null event date for case 30, which hid a `date_mismatch`; v3 got it right.
+- **p95 latency (about 12 s)** is driven by a few slow calls.
+
+**About the test set.** The 30 emails are synthetic, and so are the labels. Claude Code drafted both the emails and the answer key, and no human has independently reviewed the answer key. I did not edit the cases after seeing results. v1 and v2 were written before any results existed; v3 was not (see above). Read the cases in `backend/evals/cases/` and correct any label you disagree with before quoting these numbers. Other label ambiguities: relative dates like "next Fri" (resolved against a fixed reference date of 2026-10-17), and whether an insurance mention counts as an action item for the `missing_insurance` rule (case 28 labels it as not, and the model disagreed).
 
 Manual-vs-tool timing (10 emails): _not measured yet._
 
