@@ -9,8 +9,6 @@ from app.config import Settings, get_settings
 from app.prompts import PROMPTS
 from app.schemas import Extraction
 
-TOOL_NAME = "record_extraction"
-
 
 class ExtractionError(Exception):
     pass
@@ -49,14 +47,6 @@ def build_user_message(
         f"Event: {event_name}, on {event_date.isoformat()}\n\n"
         f"<email>\n{email_text}\n</email>"
     )
-
-
-def _tool_definition() -> dict:
-    return {
-        "name": TOOL_NAME,
-        "description": "Record the structured extraction for this email.",
-        "input_schema": Extraction.model_json_schema(),
-    }
 
 
 def grounded(evidence: str | None, email_text: str) -> bool:
@@ -108,8 +98,9 @@ def extract_with_anthropic(
         model=settings.anthropic_model,
         max_tokens=4096,
         system=PROMPTS[prompt_version],
-        tools=[_tool_definition()],
-        tool_choice={"type": "tool", "name": TOOL_NAME},
+        output_config={
+            "format": {"type": "json_schema", "schema": anthropic.transform_schema(Extraction)}
+        },
         messages=[
             {
                 "role": "user",
@@ -119,10 +110,13 @@ def extract_with_anthropic(
     )
     latency_ms = int((time.perf_counter() - started) * 1000)
 
-    block = next((b for b in response.content if b.type == "tool_use"), None)
-    if block is None:
-        raise ExtractionError("Model did not return a tool call")
-    extraction = Extraction.model_validate(block.input)
+    text = next((b.text for b in response.content if b.type == "text"), None)
+    if text is None or response.stop_reason == "max_tokens":
+        raise ExtractionError("Model did not return a complete JSON extraction")
+    try:
+        extraction = Extraction.model_validate_json(text)
+    except ValueError as exc:
+        raise ExtractionError(f"Model output did not match the schema: {exc}") from exc
     # Measured before enforcement so evals report how often the model fabricates quotes.
     evidence_total, evidence_ungrounded = count_evidence(extraction, email_text)
     extraction = enforce_grounding(extraction, email_text)

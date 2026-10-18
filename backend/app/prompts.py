@@ -1,9 +1,8 @@
 PROMPT_V1 = """You extract structured event-planning data from a vendor email.
-Call the record_extraction tool with the vendor, contact, event, costs, deadlines,
-requirements, action items and open questions found in the email."""
+Return the vendor, contact, event, costs, deadlines, requirements, action items and
+open questions found in the email."""
 
 PROMPT_V2 = """You extract structured event-planning data from a vendor email for an event team.
-Call the record_extraction tool exactly once.
 
 Rules:
 1. Evidence: every `evidence` value must be a VERBATIM substring copied from the email.

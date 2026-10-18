@@ -1,6 +1,8 @@
 import json
 from datetime import date
 
+import pytest
+
 from app.extractor import ExtractionResult
 from app.schemas import ActionItem, Cost, Deadline, Extraction, Field_
 from evals import CASES_DIR
@@ -77,9 +79,9 @@ def test_extractor_exception_is_recorded_not_raised():
         raise RuntimeError("api down")
 
     runs = run_cases(load_cases()[:2], boom, "v1")
-    report = aggregate("v1", "m", runs)
-    assert report["n_errors"] == 2
-    assert report["overall_score"] is None
+    assert all(r["error"] for r in runs)
+    with pytest.raises(ValueError):
+        aggregate("v1", "m", runs)
 
 
 def test_p95_nearest_rank():

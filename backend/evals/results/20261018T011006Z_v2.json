@@ -1,0 +1,655 @@
+{
+  "prompt_version": "v2",
+  "timestamp": "2026-10-18T01:10:06+00:00",
+  "model": "claude-sonnet-5-5",
+  "n_cases": 30,
+  "n_errors": 0,
+  "overall_score": 0.9254572940287226,
+  "scalars": {
+    "vendor_name": {
+      "accuracy": 1,
+      "n": 30
+    },
+    "event_date": {
+      "accuracy": 0.9666666666666667,
+      "n": 30
+    },
+    "contact_email": {
+      "accuracy": 1,
+      "n": 19
+    }
+  },
+  "lists": {
+    "costs": {
+      "precision": 0.92,
+      "recall": 1.0,
+      "f1": 0.9583333333333334
+    },
+    "deadlines": {
+      "precision": 0.8275862068965517,
+      "recall": 1.0,
+      "f1": 0.9056603773584906
+    },
+    "action_items": {
+      "precision": 0.7272727272727273,
+      "recall": 0.9411764705882353,
+      "f1": 0.8205128205128205
+    },
+    "requirements": {
+      "precision": 0.84,
+      "recall": 0.875,
+      "f1": 0.8571428571428572
+    }
+  },
+  "risk_accuracy": 0.9,
+  "grounding_rate": 1.0,
+  "latency_mean_ms": 5038.1,
+  "latency_p95_ms": 12838,
+  "total_tokens": 99342,
+  "total_cost_usd": 0.545454,
+  "cost_per_100_usd": 1.8181800000000001,
+  "by_difficulty": {
+    "easy": 0.920952380952381,
+    "messy": 0.9280385487528344,
+    "traps": 0.9273809523809524
+  },
+  "failures": [
+    {
+      "case": "case_002",
+      "field": "requirements",
+      "expected": [],
+      "got": [
+        "Vendor brings their own grills and propane"
+      ]
+    },
+    {
+      "case": "case_004",
+      "field": "costs",
+      "expected": [
+        {
+          "label": "200 chairs",
+          "amount_cad": 500
+        },
+        {
+          "label": "25 round tables",
+          "amount_cad": 300
+        }
+      ],
+      "got": [
+        {
+          "label": "200 stackable chairs at $2.50 each",
+          "amount_cad": 500.0,
+          "evidence": "Chairs are $2.50 each, which comes to $500"
+        },
+        {
+          "label": "25 round tables at $12 each",
+          "amount_cad": 300.0,
+          "evidence": "tables are $12 each, which comes to $300"
+        },
+        {
+          "label": "Delivery within Victoria",
+          "amount_cad": 0.0,
+          "evidence": "Delivery is free within Victoria"
+        }
+      ]
+    },
+    {
+      "case": "case_004",
+      "field": "deadlines",
+      "expected": [],
+      "got": [
+        {
+          "label": "Balance payable on delivery",
+          "due": null,
+          "evidence": "the balance is payable on delivery"
+        }
+      ]
+    },
+    {
+      "case": "case_006",
+      "field": "costs",
+      "expected": [
+        {
+          "label": "uplighting package, 12 fixtures",
+          "amount_cad": 780
+        }
+      ],
+      "got": [
+        {
+          "label": "Uplighting package with 12 fixtures, including setup and teardown",
+          "amount_cad": 780.0,
+          "evidence": "uplighting package with 12 fixtures, $780 including setup and teardown"
+        },
+        {
+          "label": "Deposit",
+          "amount_cad": 200.0,
+          "evidence": "A deposit of $200 is due by January 15, 2027"
+        }
+      ]
+    },
+    {
+      "case": "case_006",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "pay deposit",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Pay $200 deposit",
+          "owner": "us",
+          "due": "2027-01-15",
+          "evidence": "A deposit of $200 is due by January 15, 2027"
+        },
+        {
+          "task": "Provide ballroom access from 2pm on the day of the event",
+          "owner": "us",
+          "due": "2027-02-13",
+          "evidence": "We need access to the ballroom from 2pm on the day of the event."
+        }
+      ]
+    },
+    {
+      "case": "case_008",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "send final artwork",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Reply with the final artwork files so the vendor can start printing",
+          "owner": "us",
+          "due": "2027-02-12",
+          "evidence": "Reply with the files and we will start."
+        },
+        {
+          "task": "Start printing once files are received and deliver ahead of the festival",
+          "owner": "vendor",
+          "due": null,
+          "evidence": "so we can deliver ahead of the March 6, 2027 festival"
+        }
+      ]
+    },
+    {
+      "case": "case_008",
+      "field": "requirements",
+      "expected": [],
+      "got": [
+        "Final artwork must be supplied by February 12, 2027"
+      ]
+    },
+    {
+      "case": "case_009",
+      "field": "costs",
+      "expected": [
+        {
+          "label": "24x16 ft stage with roof",
+          "amount_cad": 4800
+        }
+      ],
+      "got": [
+        {
+          "label": "24x16 ft stage with roof, including delivery and crew",
+          "amount_cad": 4800.0,
+          "evidence": "Price: $4,800 including delivery and crew"
+        },
+        {
+          "label": "50% deposit",
+          "amount_cad": 2400.0,
+          "evidence": "50% deposit ($2,400)"
+        }
+      ]
+    },
+    {
+      "case": "case_010",
+      "field": "requirements",
+      "expected": [],
+      "got": [
+        "Units are delivered the day before and picked up the day after."
+      ]
+    },
+    {
+      "case": "case_012",
+      "field": "deadlines",
+      "expected": [
+        {
+          "label": "bundle offer ends",
+          "due": "2026-10-31"
+        }
+      ],
+      "got": [
+        {
+          "label": "Book before end of month to get the bundle price of 700",
+          "due": "2026-10-31",
+          "evidence": "if u book before the end of the month"
+        },
+        {
+          "label": "Certificate of insurance due before vendor arrives at event",
+          "due": null,
+          "evidence": "we need a certificate of insurance from you before we show up"
+        }
+      ]
+    },
+    {
+      "case": "case_012",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "send certificate of insurance",
+          "owner": "us"
+        },
+        {
+          "task": "tell vendor the event date",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Tell vendor the event date",
+          "owner": "us",
+          "due": null,
+          "evidence": "not sure what date you're looking at tho, let me know"
+        },
+        {
+          "task": "Provide certificate of insurance before vendor arrives",
+          "owner": "us",
+          "due": null,
+          "evidence": "we need a certificate of insurance from you before we show up"
+        },
+        {
+          "task": "Book before end of month to get bundle price",
+          "owner": "us",
+          "due": "2026-10-31",
+          "evidence": "if u book before the end of the month"
+        }
+      ]
+    },
+    {
+      "case": "case_013",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "send final flavours",
+          "owner": "us"
+        },
+        {
+          "task": "confirm drop-off at noon",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Send final cupcake flavours to Marnie",
+          "owner": "us",
+          "due": "2026-12-10",
+          "evidence": "Could you tell me the final flavours by Dec 10th?"
+        },
+        {
+          "task": "Reply to confirm whether noon drop-off works",
+          "owner": "us",
+          "due": null,
+          "evidence": "And can I drop off at noon?"
+        },
+        {
+          "task": "Decide whether to order gluten free cupcakes and how many dozen",
+          "owner": "us",
+          "due": null,
+          "evidence": "gluten free is +$12 a dozen if you want some"
+        }
+      ]
+    },
+    {
+      "case": "case_013",
+      "field": "requirements",
+      "expected": [
+        "drop-off at noon"
+      ],
+      "got": []
+    },
+    {
+      "case": "case_014",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "get the city noise permit",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Obtain the city noise permit",
+          "owner": "us",
+          "due": null,
+          "evidence": "the city noise permit is on you"
+        },
+        {
+          "task": "Confirm booking before the April 10 hold expires",
+          "owner": "us",
+          "due": "2026-10-30",
+          "evidence": "I'll hold April 10 for you till Friday Oct 30"
+        }
+      ]
+    },
+    {
+      "case": "case_015",
+      "field": "deadlines",
+      "expected": [
+        {
+          "label": "sign contract",
+          "due": "2026-11-15"
+        }
+      ],
+      "got": [
+        {
+          "label": "Sign the agreement",
+          "due": "2026-11-15",
+          "evidence": "sign by nov 15 pls"
+        },
+        {
+          "label": "Pay deposit (half) when signing",
+          "due": null,
+          "evidence": "deposit of half is due when you sign"
+        }
+      ]
+    },
+    {
+      "case": "case_015",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "sign contract",
+          "owner": "us"
+        },
+        {
+          "task": "pay deposit",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Sign the agreement with the vendor",
+          "owner": "us",
+          "due": "2026-11-15",
+          "evidence": "sign by nov 15 pls"
+        },
+        {
+          "task": "Pay the deposit of half at signing",
+          "owner": "us",
+          "due": null,
+          "evidence": "deposit of half is due when you sign"
+        },
+        {
+          "task": "Confirm Friday March 5 setup access at the venue",
+          "owner": "us",
+          "due": null,
+          "evidence": "as long as we can set up friday the 5th"
+        }
+      ]
+    },
+    {
+      "case": "case_016",
+      "field": "deadlines",
+      "expected": [],
+      "got": [
+        {
+          "label": "Linen pickup (Thursday before the event)",
+          "due": "2027-02-11",
+          "evidence": "Pickup is the Thursday before the event"
+        },
+        {
+          "label": "Linen return (Monday after the event)",
+          "due": "2027-02-15",
+          "evidence": "return is the Monday after"
+        }
+      ]
+    },
+    {
+      "case": "case_016",
+      "field": "requirements",
+      "expected": [
+        "pickup the Thursday before the event",
+        "return the Monday after"
+      ],
+      "got": [
+        "Pickup is the Thursday before the event, return is the Monday after"
+      ]
+    },
+    {
+      "case": "case_016",
+      "field": "risks",
+      "expected": [],
+      "got": [
+        "deadline_after_event"
+      ]
+    },
+    {
+      "case": "case_017",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "send deposit",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Pay deposit to lock in the tent booking",
+          "owner": "us",
+          "due": "2026-10-23",
+          "evidence": "deposit by next Fri to lock it in"
+        },
+        {
+          "task": "Provide power access near the tent",
+          "owner": "us",
+          "due": null,
+          "evidence": "Need power access near the tent."
+        },
+        {
+          "task": "Bring the 10x10 tent and two staff to the Night Market",
+          "owner": "vendor",
+          "due": "2027-03-20",
+          "evidence": "we can bring the 10x10 tent and two staff"
+        }
+      ]
+    },
+    {
+      "case": "case_018",
+      "field": "requirements",
+      "expected": [
+        "30 amp hookup",
+        "water access",
+        "12 ft wide spot",
+        "event permit number"
+      ],
+      "got": [
+        "30amp hookup",
+        "water access",
+        "a spot 12 ft wide"
+      ]
+    },
+    {
+      "case": "case_019",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "tell vendor which games we want",
+          "owner": "us"
+        },
+        {
+          "task": "pay deposit",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Reply to vendor with which items we want",
+          "owner": "us",
+          "due": null,
+          "evidence": "we'd love a quick reply on which ones you want"
+        },
+        {
+          "task": "Pay deposit",
+          "owner": "us",
+          "due": "2026-11-06",
+          "evidence": "Deposit due Fri Nov 6"
+        },
+        {
+          "task": "Drop off games at 11 and pick up at 6 on the event day",
+          "owner": "vendor",
+          "due": "2027-01-14",
+          "evidence": "We'd drop off at 11 and grab at 6"
+        }
+      ]
+    },
+    {
+      "case": "case_022",
+      "field": "action_items",
+      "expected": [],
+      "got": [
+        {
+          "task": "Sort out the final price once the team states which quote it prefers",
+          "owner": "vendor",
+          "due": null,
+          "evidence": "I'll sort it out"
+        }
+      ]
+    },
+    {
+      "case": "case_025",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "send insurance details",
+          "owner": "us"
+        },
+        {
+          "task": "make final payment",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Provide insurance details to the vendor",
+          "owner": "us",
+          "due": null,
+          "evidence": "We will also need your insurance details."
+        }
+      ]
+    },
+    {
+      "case": "case_025",
+      "field": "requirements",
+      "expected": [],
+      "got": [
+        "Insurance details needed"
+      ]
+    },
+    {
+      "case": "case_028",
+      "field": "costs",
+      "expected": [
+        {
+          "label": "inflatable slide",
+          "amount_cad": 520
+        }
+      ],
+      "got": [
+        {
+          "label": "Inflatable slide",
+          "amount_cad": 520.0,
+          "evidence": "inflatable slide on March 20, 2027, for $520"
+        },
+        {
+          "label": "Deposit",
+          "amount_cad": 100.0,
+          "evidence": "A deposit of $100"
+        }
+      ]
+    },
+    {
+      "case": "case_028",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "pay deposit",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Arrange event insurance for the inflatable slide and provide proof to the venue",
+          "owner": "us",
+          "due": null,
+          "evidence": "our policy requires event insurance to be in place for inflatables, and the venue will want to see proof"
+        },
+        {
+          "task": "Pay $100 deposit",
+          "owner": "us",
+          "due": "2027-01-08",
+          "evidence": "A deposit of $100 is due by January 8, 2027"
+        }
+      ]
+    },
+    {
+      "case": "case_028",
+      "field": "risks",
+      "expected": [
+        "missing_insurance"
+      ],
+      "got": []
+    },
+    {
+      "case": "case_030",
+      "field": "event_date",
+      "expected": "2027-04-24",
+      "got": null
+    },
+    {
+      "case": "case_030",
+      "field": "action_items",
+      "expected": [
+        {
+          "task": "send certificate of insurance",
+          "owner": "us"
+        },
+        {
+          "task": "reply to extend the hold",
+          "owner": "us"
+        }
+      ],
+      "got": [
+        {
+          "task": "Reply to vendor to keep the date hold",
+          "owner": "us",
+          "due": null,
+          "evidence": "unless I hear back"
+        },
+        {
+          "task": "Provide a certificate of insurance",
+          "owner": "us",
+          "due": null,
+          "evidence": "We need a certificate of insurance from you too."
+        }
+      ]
+    },
+    {
+      "case": "case_030",
+      "field": "risks",
+      "expected": [
+        "deadline_in_past",
+        "over_budget",
+        "date_mismatch"
+      ],
+      "got": [
+        "deadline_in_past",
+        "over_budget"
+      ]
+    }
+  ],
+  "errors": []
+}

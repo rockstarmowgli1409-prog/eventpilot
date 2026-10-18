@@ -130,6 +130,8 @@ def _failures(case: dict, scored: dict) -> list[dict]:
 def aggregate(prompt_version: str, model: str, runs: list[dict]) -> dict:
     """runs: [{case, scored|None, meta|None, error|None}] -> report dict."""
     ok = [r for r in runs if r["scored"] is not None]
+    if not ok:
+        raise ValueError("No case produced a result; refusing to build a report.")
     scalars = {}
     for field in SCALAR_FIELDS:
         hits = [
@@ -222,6 +224,11 @@ def main(argv: list[str] | None = None) -> int:
     cases = load_cases()[: args.limit]
     print(f"Running {len(cases)} cases with prompt {args.prompt} on {settings.anthropic_model}")
     runs = run_cases(cases, extract_with_anthropic, args.prompt)
+    if all(r["error"] for r in runs):
+        print(
+            f"Every case failed, nothing written. First error: {runs[0]['error']}", file=sys.stderr
+        )
+        return 1
     report = aggregate(args.prompt, settings.anthropic_model, runs)
     path = write_report(report)
     print(f"Wrote {path}")

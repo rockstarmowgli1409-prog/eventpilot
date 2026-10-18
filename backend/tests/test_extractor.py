@@ -1,3 +1,4 @@
+import json
 from datetime import date
 from types import SimpleNamespace
 
@@ -12,10 +13,16 @@ from app.extractor import (
 EMAIL = "Hi, Harbour Tents here. Tent and staff for $850. Deposit by Oct 23."
 
 
-def fake_client(payload: dict | None):
-    blocks = [] if payload is None else [SimpleNamespace(type="tool_use", input=payload)]
+def fake_client(payload: dict | str | None, stop_reason: str = "end_turn"):
+    if payload is None:
+        blocks = []
+    else:
+        text = payload if isinstance(payload, str) else json.dumps(payload)
+        blocks = [SimpleNamespace(type="text", text=text)]
     response = SimpleNamespace(
-        content=blocks, usage=SimpleNamespace(input_tokens=1000, output_tokens=200)
+        content=blocks,
+        stop_reason=stop_reason,
+        usage=SimpleNamespace(input_tokens=1000, output_tokens=200),
     )
     return SimpleNamespace(messages=SimpleNamespace(create=lambda **_: response))
 
@@ -93,3 +100,10 @@ def test_meta_counts_ungrounded_quotes_before_they_are_dropped():
     meta = run(fake_client(bad)).meta
     assert meta["evidence_ungrounded"] == 1
     assert meta["evidence_total"] == 3  # vendor, made-up cost quote, deadline
+
+
+def test_truncated_or_invalid_json_raises():
+    with pytest.raises(ExtractionError):
+        run(fake_client(json.dumps(payload())[:40], stop_reason="max_tokens"))
+    with pytest.raises(ExtractionError):
+        run(fake_client("not json"))
