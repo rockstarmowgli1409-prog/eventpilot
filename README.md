@@ -2,7 +2,9 @@
 
 AI ops copilot that turns messy vendor emails into a structured, evidence-backed event plan.
 
-Live demo: _not deployed yet_ · Demo video: _not recorded yet_
+Live demo: https://eventpilot-red.vercel.app · Demo video: _not recorded yet_
+
+_Hosted on free tiers: the API sleeps when idle, so the first request can take up to a minute. The demo has a daily spend cap and uses synthetic emails only._
 
 ## The problem
 
