@@ -1,7 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { api, type EventRecord } from "./api";
 
 const KEY = "eventpilot.selectedEvent";
+
+interface EventsState {
+  events: EventRecord[];
+  selectedId: number | null;
+  selected: EventRecord | null;
+  setSelectedId: (id: number | null) => void;
+  refresh: () => Promise<void>;
+  error: string | null;
+  loading: boolean;
+}
+
+const EventsContext = createContext<EventsState | null>(null);
 
 function readStored(): number | null {
   try {
@@ -12,7 +24,7 @@ function readStored(): number | null {
   }
 }
 
-export function useEvents() {
+export function EventsProvider({ children }: { children: React.ReactNode }) {
   const [events, setEvents] = useState<EventRecord[]>([]);
   const [selectedId, setSelectedIdState] = useState<number | null>(readStored);
   const [error, setError] = useState<string | null>(null);
@@ -45,5 +57,23 @@ export function useEvents() {
     void refresh();
   }, [refresh]);
 
-  return { events, selectedId, setSelectedId, refresh, error, loading };
+  const value = useMemo<EventsState>(
+    () => ({
+      events,
+      selectedId,
+      selected: events.find((e) => e.id === selectedId) ?? null,
+      setSelectedId,
+      refresh,
+      error,
+      loading,
+    }),
+    [events, selectedId, setSelectedId, refresh, error, loading],
+  );
+  return <EventsContext.Provider value={value}>{children}</EventsContext.Provider>;
+}
+
+export function useEvents(): EventsState {
+  const ctx = useContext(EventsContext);
+  if (!ctx) throw new Error("useEvents must be used inside EventsProvider");
+  return ctx;
 }

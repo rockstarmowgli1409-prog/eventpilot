@@ -55,6 +55,7 @@ export interface EvalRun {
   latency_p95_ms: number | null;
   total_cost_usd: number;
   cost_per_100_usd: number | null;
+  by_difficulty?: Record<string, number | null>;
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {

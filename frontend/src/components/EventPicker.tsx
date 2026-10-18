@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { api, type EventRecord } from "../api";
+import { api } from "../api";
+import { useEvents } from "../events";
+import { btnPrimary, input } from "../ui";
 
-interface Props {
-  events: EventRecord[];
-  selectedId: number | null;
-  onSelect: (id: number) => void;
-  onCreated: () => Promise<void>;
-}
-
-export default function EventPicker({ events, selectedId, onSelect, onCreated }: Props) {
+export default function EventPicker() {
+  const { events, selectedId, setSelectedId, refresh, error: loadError } = useEvents();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
@@ -17,13 +13,9 @@ export default function EventPicker({ events, selectedId, onSelect, onCreated }:
 
   async function create() {
     try {
-      const created = await api.createEvent({
-        name,
-        date,
-        budget_cad: budget ? Number(budget) : null,
-      });
-      await onCreated();
-      onSelect(created.id);
+      const created = await api.createEvent({ name, date, budget_cad: budget ? Number(budget) : null });
+      await refresh();
+      setSelectedId(created.id);
       setOpen(false);
       setName("");
       setDate("");
@@ -34,14 +26,17 @@ export default function EventPicker({ events, selectedId, onSelect, onCreated }:
     }
   }
 
-  const input = "rounded border border-slate-300 px-2 py-1.5 text-sm";
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="space-y-2">
+      <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400" htmlFor="event-select">
+        Event
+      </label>
       <select
+        id="event-select"
         aria-label="Event"
-        className={input}
+        className={`${input} w-full`}
         value={selectedId ?? ""}
-        onChange={(e) => onSelect(Number(e.target.value))}
+        onChange={(e) => setSelectedId(Number(e.target.value))}
       >
         {events.length === 0 && <option value="">No events yet</option>}
         {events.map((ev) => (
@@ -50,24 +45,20 @@ export default function EventPicker({ events, selectedId, onSelect, onCreated }:
           </option>
         ))}
       </select>
-      <button className="text-sm text-indigo-700 underline" onClick={() => setOpen(!open)}>
-        {open ? "Cancel" : "New event"}
+      <button className="text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400" onClick={() => setOpen(!open)}>
+        {open ? "Cancel" : "+ New event"}
       </button>
       {open && (
-        <div className="flex w-full flex-wrap items-center gap-2 rounded-lg border border-slate-200 bg-white p-3">
-          <input className={input} placeholder="Event name" value={name} onChange={(e) => setName(e.target.value)} />
-          <input className={input} type="date" aria-label="Event date" value={date} onChange={(e) => setDate(e.target.value)} />
-          <input className={input} type="number" placeholder="Budget (CAD)" value={budget} onChange={(e) => setBudget(e.target.value)} />
-          <button
-            disabled={!name || !date}
-            onClick={create}
-            className="rounded bg-slate-900 px-3 py-1.5 text-sm text-white disabled:opacity-40"
-          >
-            Create
+        <div className="space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900/60">
+          <input className={`${input} w-full`} placeholder="Event name" value={name} onChange={(e) => setName(e.target.value)} />
+          <input className={`${input} w-full`} type="date" aria-label="Event date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <input className={`${input} w-full`} type="number" placeholder="Budget (CAD)" value={budget} onChange={(e) => setBudget(e.target.value)} />
+          <button disabled={!name || !date} onClick={create} className={`${btnPrimary} w-full`}>
+            Create event
           </button>
-          {error && <span className="text-sm text-red-700">{error}</span>}
         </div>
       )}
+      {(error ?? loadError) && <p className="text-xs text-red-600 dark:text-red-400">{error ?? loadError}</p>}
     </div>
   );
 }

@@ -1,39 +1,41 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { api, type ExtractResponse } from "../api";
-import DraftEditor from "../components/DraftEditor";
-import EventPicker from "../components/EventPicker";
-import FieldCard from "../components/FieldCard";
-import RiskBadge from "../components/RiskBadge";
-import { money } from "../format";
-import { useEvents } from "../hooks";
+import ResultView from "../components/ResultView";
+import { useEvents } from "../events";
 import { SAMPLES } from "../samples";
+import { btnPrimary, card, input, muted } from "../ui";
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Skeleton() {
   return (
-    <section className="mt-6">
-      <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500">{title}</h2>
-      {children}
-    </section>
+    <div className="mt-8 grid gap-6 lg:grid-cols-2" aria-busy="true" aria-label="Extracting">
+      <div className={`${card} h-72 animate-pulse`} />
+      <div className="space-y-4">
+        {[28, 20, 36, 24].map((h, i) => (
+          <div key={i} className={`${card} animate-pulse`} style={{ height: `${h * 4}px` }} />
+        ))}
+      </div>
+    </div>
   );
 }
 
-function Quote({ text }: { text: string | null }) {
-  return text ? <mark className="mt-1 block rounded bg-yellow-100 px-1 text-xs">{text}</mark> : null;
-}
-
 export default function Inbox() {
-  const { events, selectedId, setSelectedId, refresh, error: eventsError, loading } = useEvents();
+  const { events, selectedId, setSelectedId, refresh, loading, error: eventsError } = useEvents();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [promptVersion, setPromptVersion] = useState("v2");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ExtractResponse | null>(null);
+  const [analysed, setAnalysed] = useState("");
+  const preloaded = useRef(false);
 
   async function loadSample(index: number) {
     const sample = SAMPLES[index];
     if (!sample) return;
     setEmail(sample.email);
     setResult(null);
+    setError(null);
     try {
       let match = events.find((e) => e.name === sample.event.name && e.date === sample.event.date);
       if (!match) {
@@ -46,150 +48,96 @@ export default function Inbox() {
     }
   }
 
+  // The landing page links here with ?sample preselected.
+  useEffect(() => {
+    const idx = (location.state as { sample?: number } | null)?.sample;
+    if (idx === undefined || preloaded.current || loading) return;
+    preloaded.current = true;
+    void loadSample(idx);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
+
   async function run() {
     if (selectedId === null) return;
     setBusy(true);
     setError(null);
+    setResult(null);
     try {
       setResult(await api.extract({ email_text: email, event_id: selectedId, prompt_version: promptVersion }));
+      setAnalysed(email);
     } catch (e) {
-      setResult(null);
       setError((e as Error).message);
     } finally {
       setBusy(false);
     }
   }
 
-  const x = result?.extraction;
   return (
     <div>
+      <h1 className="text-2xl font-bold tracking-tight">Inbox</h1>
+      <p className={`mt-1 text-sm ${muted}`}>Paste a vendor email and see what EventPilot finds, with receipts.</p>
+
       {eventsError && (
-        <div role="alert" className="mb-4 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+        <div role="alert" className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800 dark:border-red-400/30 dark:bg-red-400/10 dark:text-red-200">
           {eventsError}
         </div>
       )}
-      <div className="flex flex-wrap items-center gap-3">
-        <EventPicker events={events} selectedId={selectedId} onSelect={setSelectedId} onCreated={refresh} />
-        <select
-          aria-label="Load sample email"
-          className="rounded border border-slate-300 px-2 py-1.5 text-sm"
-          value=""
-          onChange={(e) => void loadSample(Number(e.target.value))}
-        >
-          <option value="" disabled>Load sample email…</option>
+
+      <div className={`${card} mt-6 p-5`}>
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <span className="text-sm font-medium">Try a sample:</span>
           {SAMPLES.map((s, i) => (
-            <option key={s.label} value={i}>{s.label}</option>
+            <button
+              key={s.label}
+              onClick={() => void loadSample(i)}
+              className="rounded-full border border-slate-300 px-3 py-1 text-xs font-medium text-slate-600 transition hover:border-indigo-400 hover:text-indigo-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-indigo-400 dark:hover:text-indigo-200"
+            >
+              {s.label}
+            </button>
           ))}
-        </select>
-        <select
-          aria-label="Prompt version"
-          className="rounded border border-slate-300 px-2 py-1.5 text-sm"
-          value={promptVersion}
-          onChange={(e) => setPromptVersion(e.target.value)}
-        >
-          <option value="v1">Prompt v1</option>
-          <option value="v2">Prompt v2</option>
-        </select>
+        </div>
+        <textarea
+          aria-label="Email text"
+          className={`${input} h-48 w-full resize-y`}
+          placeholder="Paste a vendor email here, or pick a sample above…"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <button onClick={run} disabled={busy || !email.trim() || selectedId === null} className={btnPrimary}>
+            {busy ? "Extracting…" : "Extract"}
+          </button>
+          <div role="group" aria-label="Prompt version" className="inline-flex overflow-hidden rounded-lg border border-slate-300 text-xs dark:border-slate-700">
+            {["v1", "v2"].map((v) => (
+              <button
+                key={v}
+                onClick={() => setPromptVersion(v)}
+                aria-pressed={promptVersion === v}
+                className={`px-3 py-2 font-medium ${
+                  promptVersion === v ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                }`}
+              >
+                Prompt {v}
+              </button>
+            ))}
+          </div>
+          {selectedId === null && !loading && (
+            <span className={`text-sm ${muted}`}>Create an event in the sidebar, or load a sample.</span>
+          )}
+        </div>
       </div>
 
-      <textarea
-        aria-label="Email text"
-        className="mt-4 h-56 w-full rounded-lg border border-slate-300 bg-white p-3 text-sm"
-        placeholder="Paste a vendor email here, or load a sample above…"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <div className="mt-3 flex items-center gap-3">
-        <button
-          onClick={run}
-          disabled={busy || !email.trim() || selectedId === null}
-          className="rounded bg-indigo-700 px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
-        >
-          {busy ? "Extracting…" : "Extract"}
-        </button>
-        {selectedId === null && !loading && (
-          <span className="text-sm text-slate-500">Create or pick an event first (or load a sample).</span>
-        )}
-      </div>
       {error && (
-        <div role="alert" className="mt-4 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+        <div role="alert" className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800 dark:border-red-400/30 dark:bg-red-400/10 dark:text-red-200">
           {error}
         </div>
       )}
 
-      {result && x && (
-        <>
-          <Section title="Extracted fields">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <FieldCard label="Vendor" field={x.vendor_name} />
-              <FieldCard label="Contact email" field={x.contact_email} />
-              <FieldCard label="Event name" field={x.event_name} />
-              <FieldCard label="Event date" field={x.event_date} />
-            </div>
-          </Section>
-
-          <Section title="Risks">
-            {result.risks.length === 0 ? (
-              <p className="text-sm text-slate-500">No risks flagged.</p>
-            ) : (
-              <div className="grid gap-2">{result.risks.map((r, i) => <RiskBadge key={i} risk={r} />)}</div>
-            )}
-          </Section>
-
-          <Section title="Costs">
-            {x.costs.length === 0 ? <p className="text-sm text-slate-500">No costs found.</p> : (
-              <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
-                {x.costs.map((c, i) => (
-                  <li key={i} className="p-3 text-sm">
-                    <div className="flex justify-between"><span>{c.label}</span><b>{money(c.amount_cad)}</b></div>
-                    <Quote text={c.evidence} />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Section>
-
-          <Section title="Deadlines and action items">
-            <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
-              {x.deadlines.map((d, i) => (
-                <li key={`d${i}`} className="p-3 text-sm">
-                  <div className="flex justify-between"><span>Deadline: {d.label}</span><b>{d.due ?? "no date"}</b></div>
-                  <Quote text={d.evidence} />
-                </li>
-              ))}
-              {x.action_items.map((a, i) => (
-                <li key={`a${i}`} className="p-3 text-sm">
-                  <div className="flex justify-between">
-                    <span>To do ({a.owner ?? "unassigned"}): {a.task}</span>
-                    <b>{a.due ?? ""}</b>
-                  </div>
-                  <Quote text={a.evidence} />
-                </li>
-              ))}
-              {x.deadlines.length + x.action_items.length === 0 && (
-                <li className="p-3 text-sm text-slate-500">Nothing found.</li>
-              )}
-            </ul>
-          </Section>
-
-          {(x.requirements.length > 0 || x.open_questions.length > 0) && (
-            <Section title="Requirements and open questions">
-              <ul className="list-disc space-y-1 pl-5 text-sm">
-                {x.requirements.map((r, i) => <li key={`r${i}`}>{r}</li>)}
-                {x.open_questions.map((q, i) => <li key={`q${i}`} className="text-amber-800">{q}</li>)}
-              </ul>
-            </Section>
-          )}
-
-          <Section title="Draft reply (review before sending)">
-            <DraftEditor extractionId={result.id} initial={result.draft_reply} />
-          </Section>
-
-          <p className="mt-4 text-xs text-slate-400">
-            {result.meta.model} · prompt {result.meta.prompt_version} · {result.meta.latency_ms} ms · $
-            {result.meta.cost_usd.toFixed(4)}
-          </p>
-        </>
+      {busy && <Skeleton />}
+      {result && !busy && (
+        <div className="fade-up mt-8">
+          <ResultView email={analysed} result={result} />
+        </div>
       )}
     </div>
   );

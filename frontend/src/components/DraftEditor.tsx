@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
+import { btnPrimary, btnSecondary, card, muted } from "../ui";
 
-export default function DraftEditor({ extractionId, initial }: { extractionId: number; initial: string }) {
+interface Props {
+  extractionId?: number;
+  initial: string;
+}
+
+export default function DraftEditor({ extractionId, initial }: Props) {
   const [text, setText] = useState(initial);
   const [status, setStatus] = useState<string | null>(null);
 
-  useEffect(() => setText(initial), [initial, extractionId]);
+  useEffect(() => {
+    setText(initial);
+    setStatus(null);
+  }, [initial, extractionId]);
 
   async function copy() {
     try {
@@ -17,6 +26,7 @@ export default function DraftEditor({ extractionId, initial }: { extractionId: n
   }
 
   async function save() {
+    if (extractionId === undefined) return;
     try {
       await api.saveDraft(extractionId, text);
       setStatus("Draft saved");
@@ -26,21 +36,23 @@ export default function DraftEditor({ extractionId, initial }: { extractionId: n
   }
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-4">
+    <div className={`${card} p-4`}>
       <textarea
         aria-label="Draft reply"
-        className="h-56 w-full resize-y rounded border border-slate-200 p-3 font-mono text-sm"
+        className="h-56 w-full resize-y rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:border-slate-700 dark:bg-slate-950"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <div className="mt-3 flex items-center gap-3">
-        <button onClick={save} className="rounded bg-slate-900 px-3 py-1.5 text-sm text-white">
-          Save edits
-        </button>
-        <button onClick={copy} className="rounded border border-slate-300 px-3 py-1.5 text-sm">
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        {extractionId !== undefined && (
+          <button onClick={save} className={btnPrimary}>
+            Save edits
+          </button>
+        )}
+        <button onClick={copy} className={btnSecondary}>
           Copy
         </button>
-        {status && <span className="text-sm text-slate-500">{status}</span>}
+        {status && <span className={`text-sm ${muted}`}>{status}</span>}
         <span className="ml-auto text-xs text-slate-400">Nothing is sent automatically.</span>
       </div>
     </div>

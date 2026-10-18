@@ -10,6 +10,8 @@ Running campus events means dozens of vendor emails with prices, deadlines, and 
 
 ## What it does
 
+The app has a landing page with a real example run, an Inbox that links each extracted fact to its highlighted source sentence, a per-event Board, and an Evals dashboard, with light and dark themes.
+
 1. Extracts vendor, costs, dates, requirements, and action items from an email.
 2. Shows the exact quote behind every field, with a confidence score.
 3. Flags risks using deterministic rules (past deadlines, over budget, missing insurance, date mismatch).
